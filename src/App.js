@@ -28,8 +28,9 @@ class App extends Component {
       shouldHide:true,
     };
     this.handleFilterMusicData = this.handleFilterMusicData.bind(this);
-    this.handleNameLength = this.handleNameLength.bind(this);
-    this.handleAddArtist = this.handleAddArtist.bind(this);
+    this.handleNameLength      = this.handleNameLength.bind(this);
+    this.handleAddArtist       = this.handleAddArtist.bind(this);
+    this.handleSubmit          = this.handleSubmit.bind(this);
   }
   handleAddArtist(artist){
     this.setState({musicData:[...this.state.musicData, artist]})
@@ -68,6 +69,15 @@ class App extends Component {
       shouldHide:true
     })
   }
+  handleSubmit(event){
+    event.preventDefault();
+    this.props.onAddArtist(this.state);
+    this.setState({
+      artist:'',
+      name:'',
+      sales:''
+    });
+  }
 
   render() {
     return (
@@ -100,7 +110,7 @@ class FilterSales extends Component{
   constructor () {
     super();
     this.state = {
-      showModal: false
+      showModal: false,
     };
     this.handleOpenModal  = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
@@ -126,10 +136,11 @@ class FilterSales extends Component{
       <div className="btn-group" role="group" aria-label="actions">
         <ReactModal
            isOpen={this.state.showModal}
+           ariaHideApp={false}
            contentLabel="Agregar Artista a la lista..."
         >
-        <div class="modal-header">
-          <button type="button" class="close" id="closeBulkUpload" data-dismiss="modal" aria-hidden="true" data-dismiss="modal" onClick={this.handleCloseModal}>×</button>
+        <div className="modal-header">
+          <button type="button" className="close" onClick={this.handleCloseModal}>×</button>
         </div>
           <AgregaArtista></AgregaArtista>
         </ReactModal>
@@ -149,7 +160,6 @@ class AgregaArtista extends Component{
       sales :''
     }
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit      = this.handleSubmit.bind(this);
   }
   handleInputChange(event){
     const target = event.target;
@@ -160,15 +170,7 @@ class AgregaArtista extends Component{
       [name]:value
     })
   }
-  handleSubmit(event){
-    event.preventDefault();
-    this.props.onAddArtist(this.state);
-    this.setState({
-      artist:'',
-      name:'',
-      sales:''
-    });
-  }
+
   render(){
     return(
       <div>
