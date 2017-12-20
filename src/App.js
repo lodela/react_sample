@@ -30,7 +30,6 @@ class App extends Component {
     this.handleFilterMusicData = this.handleFilterMusicData.bind(this);
     this.handleNameLength      = this.handleNameLength.bind(this);
     this.handleAddArtist       = this.handleAddArtist.bind(this);
-    this.handleSubmit          = this.handleSubmit.bind(this);
   }
   handleAddArtist(artist){
     this.setState({musicData:[...this.state.musicData, artist]})
@@ -69,22 +68,12 @@ class App extends Component {
       shouldHide:true
     })
   }
-  handleSubmit(event){
-    event.preventDefault();
-    this.props.onAddArtist(this.state);
-    this.setState({
-      artist:'',
-      name:'',
-      sales:''
-    });
-  }
-
   render() {
     return (
       <div className="container">
         <div className="row">
           <h4><span className="glyphicon glyphicon-music"></span> Lista de Discos <small> <span className="badge">{this.state.musicData.length}</span></small></h4>
-          <FilterSales onAddArtist={this.handleAddArtist} onFilterArtist={this.handleFilterMusicData} onNameLength={this.handleNameLength}></FilterSales>
+          <FilterSales onFilterArtist={this.handleFilterMusicData} onNameLength={this.handleNameLength}></FilterSales>
           <h5>Total de discos vendidos: <span className="badge">{totalSales}</span></h5>
           <hr/>
           <ul className="list-group">
@@ -142,15 +131,15 @@ class FilterSales extends Component{
         <div className="modal-header">
           <button type="button" className="close" onClick={this.handleCloseModal}>×</button>
         </div>
-          <AgregaArtista></AgregaArtista>
+          <AgregaArtista onAddArtist={this.handleAddArtist}></AgregaArtista>
         </ReactModal>
         <button type="button" className="btn btn-primary btn-xs" onClick={this.filterArtist.bind(this)}>¿quienes vendieron mas de 1,000,000 de copias?</button>
         <button type="button" className="btn btn-defaul btn-xs"  onClick={this.nameLenght.bind(this)}>more than 8 chars</button>
-        <button type="button" className="btn btn-default btn-xs" onClick={this.handleOpenModal}>Agregar Artista</button>
       </div>
     );
   }
 }
+/*<button type="button" className="btn btn-default btn-xs" onClick={this.handleOpenModal}>Agregar Artista</button>*/
 class AgregaArtista extends Component{
   constructor(props){
     super(props);
@@ -160,6 +149,7 @@ class AgregaArtista extends Component{
       sales :''
     }
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleSubmit      = this.handleSubmit.bind(this);
   }
   handleInputChange(event){
     const target = event.target;
@@ -169,6 +159,15 @@ class AgregaArtista extends Component{
     this.setState({
       [name]:value
     })
+  }
+  handleSubmit(event){
+    event.preventDefault();
+    this.props.onAddArtist(this.state);
+    this.setState({
+      artist:'',
+      name:'',
+      sales:''
+    });
   }
 
   render(){
