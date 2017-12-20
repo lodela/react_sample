@@ -93,5 +93,18 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  }
+  },
+  "description": "A basic exercise on REACT. Filter, delete and add registers into the view.",
+  "main": "index.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lodela/react_sample.git"
+  },
+  "author": "Norberto Lodela",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lodela/react_sample/issues"
+  },
+  "homepage": "https://github.com/lodela/react_sample#readme"
 }

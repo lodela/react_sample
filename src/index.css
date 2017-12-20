@@ -8,3 +8,10 @@ body {
   font-size: 10px;
   font-weight: bold;
 }
+.modal-header{
+  padding: 0;
+}
+.modal-header .close {
+  margin-top: -18px;
+  margin-right: -12px;
+}

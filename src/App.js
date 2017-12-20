@@ -32,7 +32,7 @@ class App extends Component {
     this.handleAddArtist = this.handleAddArtist.bind(this);
   }
   handleAddArtist(artist){
-    console.log(artist);
+    this.setState({musicData:[...this.state.musicData, artist]})
   }
   handleRemoveArtist(index){
     // console.log(index);
@@ -88,6 +88,9 @@ class App extends Component {
             )}
           </ul>
         </div>
+        <div className="row">
+          <AgregaArtista onAddArtist={this.handleAddArtist}></AgregaArtista>
+        </div>
       </div>
     );
   }
@@ -100,7 +103,7 @@ class FilterSales extends Component{
       showModal: false
     };
     this.handleOpenModal  = this.handleOpenModal.bind(this);
-    // this.handleCloseModal = this.handleCloseModal.bind(this);
+    this.handleCloseModal = this.handleCloseModal.bind(this);
   }
   handleOpenModal () {
     this.setState({ showModal: true });
@@ -125,6 +128,9 @@ class FilterSales extends Component{
            isOpen={this.state.showModal}
            contentLabel="Agregar Artista a la lista..."
         >
+        <div class="modal-header">
+          <button type="button" class="close" id="closeBulkUpload" data-dismiss="modal" aria-hidden="true" data-dismiss="modal" onClick={this.handleCloseModal}>×</button>
+        </div>
           <AgregaArtista></AgregaArtista>
         </ReactModal>
         <button type="button" className="btn btn-primary btn-xs" onClick={this.filterArtist.bind(this)}>¿quienes vendieron mas de 1,000,000 de copias?</button>
@@ -156,8 +162,7 @@ class AgregaArtista extends Component{
   }
   handleSubmit(event){
     event.preventDefault();
-    console.log(this.state);
-    // this.props.onAddArtist(this.state);
+    this.props.onAddArtist(this.state);
     this.setState({
       artist:'',
       name:'',
@@ -172,33 +177,33 @@ class AgregaArtista extends Component{
           <div className="form-group">
             <label htmlFor="inputMusicDataArtist" className="col-sm-2 control-label">Artista</label>
             <div className="col-sm-10">
-              <input name="musicDataArtist"
+              <input name="artist"
                      type="text"
                      className="form-control"
                      id="inputMusicDataArtist"
-                     value={this.state.musicDataArtist}
+                     value={this.state.artist}
                      onChange={this.handleInputChange}
                      placeholder="Nombre Artista">
               </input>
             </div>
             <label htmlFor="inputMusicDataName" className="col-sm-2 control-label">Album</label>
             <div className="col-sm-10">
-              <input name="musicDataName"
+              <input name="name"
                      type="text"
                      className="form-control"
                      id="inputMusicDataName"
-                     value={this.state.musicDataName}
+                     value={this.state.name}
                      onChange={this.handleInputChange}
                      placeholder="Album">
               </input>
             </div>
             <label htmlFor="inputMusicDataSales" className="col-sm-2 control-label">Ventas</label>
             <div className="col-sm-10">
-              <input name="musicDataSales"
+              <input name="sales"
                      type="number"
                      className="form-control"
                      id="inputMusicDataSales"
-                     value={this.state.musicDataSales}
+                     value={this.state.sales}
                      onChange={this.handleInputChange}
                      placeholder="No. de copias vendidas">
               </input>
@@ -207,7 +212,6 @@ class AgregaArtista extends Component{
           <div className="form-group">
             <div className="col-sm-offset-2 col-sm-10 btn-group" role="group" aria-label="actions">
               <button type="submit" className="btn btn-success">Agregar Artista</button>
-              <button type="submit" className="btn btn-default" onClick={this.handleCloseModal}>Cerrar / Cancelar</button>
             </div>
           </div>
         </form>
