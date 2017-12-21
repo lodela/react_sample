@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import ReactModal from 'react-modal';
+import Header from './components/Header';
 
 const musicData = [
   { artist: 'Adele', name: '25', sales: 1731000 },
@@ -72,6 +73,8 @@ class App extends Component {
     return (
       <div className="container">
         <div className="row">
+          <Header/>
+          <hr/>
           <h4><span className="glyphicon glyphicon-music"></span> Lista de Discos <small> <span className="badge">{this.state.musicData.length}</span></small></h4>
           <FilterSales onFilterArtist={this.handleFilterMusicData} onNameLength={this.handleNameLength}></FilterSales>
           <h5>Total de discos vendidos: <span className="badge">{totalSales}</span></h5>
